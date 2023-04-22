@@ -1,10 +1,26 @@
 import type { NextPage } from "next"
 import Head from "next/head"
+import { useEffect, useState } from "react"
 
 import Layout from "@/components/Layout"
 import Code from "@/components/ui/Code"
+import Textarea from "@/components/ui/Textarea"
+import { api } from "@/utils/api"
 
 const DebugPage: NextPage = () => {
+  const [textarea, setTextarea] = useState<string>("")
+  const { mutate: scrapeLinks, data: links } = api.scraper.scrape.useMutation()
+
+  const handleSubmit = () => {
+    scrapeLinks({
+      links: ["https://github.com/enaqx/awesome-react"],
+    })
+  }
+
+  useEffect(() => {
+    console.log(links)
+  }, [links])
+
   return (
     <div className="flex min-h-screen flex-col bg-stone-50 text-stone-950 dark:bg-stone-950 dark:text-stone-50">
       <Head>
@@ -14,6 +30,11 @@ const DebugPage: NextPage = () => {
       </Head>
       <Layout>
         <div className="w-full">
+          <Textarea
+            onSubmit={handleSubmit}
+            value={textarea}
+            onChange={(value) => setTextarea(value)}
+          />
           <Code>hello</Code>
         </div>
       </Layout>

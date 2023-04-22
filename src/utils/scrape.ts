@@ -6,7 +6,7 @@ export const scrapePage = async (url: string) => {
     const htmlString = await res.text()
     const $ = cheerio.load(htmlString)
 
-    const elements = $("h1, h2, h3, h4, h5, h6")
+    const elements = $("#readme")
       .get()
       .map((h) => {
         return {
