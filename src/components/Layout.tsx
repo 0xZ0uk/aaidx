@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  MdBugReport,
   MdContentPaste,
   MdDataExploration,
   MdHub,
@@ -21,6 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           { path: "/plan", name: "Plan", icon: <MdContentPaste /> },
           { path: "/optimize", name: "Optimize", icon: <MdDataExploration /> },
           { path: "/test", name: "Test", icon: <MdHub /> },
+          { path: "/debug", name: "Debug", icon: <MdBugReport /> },
         ]}
       />
       <div className="w-full h-full basis-auto flex flex-col items-start justify-start p-8">

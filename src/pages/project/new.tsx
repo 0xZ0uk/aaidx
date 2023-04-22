@@ -1,16 +1,24 @@
+import { ChainValues } from "langchain/dist/schema"
 import type { NextPage } from "next"
 import Head from "next/head"
 import { useEffect, useState } from "react"
 
 import Layout from "@/components/Layout"
+import Code from "@/components/ui/Code"
 import Textarea from "@/components/ui/Textarea"
 import { api } from "@/utils/api"
 
+interface NewProjectChainData extends ChainValues {
+  text: string
+}
+
 const NewProject: NextPage = () => {
+  const [aiMessage, setAiMessage] = useState<string>("")
   const [description, setDescription] = useState<string>("")
   const { mutate, data } = api.chat.chat.useMutation()
 
   const handleSubmit = () => {
+    setDescription("")
     mutate({
       prompt:
         "I'm trying to build an app that uses AI to suggest the best npm packages available for a project",
@@ -18,7 +26,10 @@ const NewProject: NextPage = () => {
   }
 
   useEffect(() => {
-    console.log("ai message: ", data)
+    if (data) {
+      const { text: aiResponse } = data.res as NewProjectChainData
+      setAiMessage(aiResponse.trim())
+    }
   }, [data])
 
   return (
@@ -39,6 +50,7 @@ const NewProject: NextPage = () => {
             onChange={(value) => setDescription(value.toString())}
             onSubmit={handleSubmit}
           />
+          <Code label="AI Suggestion">{aiMessage}</Code>
         </div>
       </Layout>
     </div>

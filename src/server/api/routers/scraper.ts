@@ -3,8 +3,8 @@ import z from "zod"
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc"
 import newProjectChain from "@/utils/chains/newProject"
 
-export const chatRouter = createTRPCRouter({
-  chat: publicProcedure
+export const scraperRouter = createTRPCRouter({
+  scrape: publicProcedure
     .input(z.object({ prompt: z.string() }))
     .mutation(async ({ input }) => {
       try {
